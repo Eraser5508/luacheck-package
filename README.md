@@ -1,1 +1,1 @@
-# Luacheck for ACM
+# luacheck for VS Code
