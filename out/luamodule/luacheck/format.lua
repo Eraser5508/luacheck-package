@@ -96,7 +96,7 @@ local message_formats = {
    ["541"] = "empty do..end block",
    ["542"] = "empty if branch",
    ["551"] = "empty statement",
-   --561 571待拓展
+   --571待拓展
    ["561"] = "cyclomatic complexity of method is too high ({complexity} > {max_complexity})",
    ["571"] = "numeric for loop goes from {length} down to {limit} but loop step is not negative",
    ["611"] = "line contains only whitespace",
