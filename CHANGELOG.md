@@ -1,1 +1,0 @@
-# Luacheck for ACM Change Log
