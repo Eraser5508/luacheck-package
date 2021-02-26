@@ -21,26 +21,6 @@ local function warn_cyclomatic_complexity(chstate, line, complexity)
    if node.location then
       chstate:warn_high_complexity(node.location, complexity)
    end
-   
-   -- local value = line.node.value
-   -- if value then
-   --    chstate.log("true")
-   -- else
-   --    chstate:log("false")
-   -- end
-
-   -- if line == chstate.top_line then
-   --    chstate:warn("561", 1, 1, 1, {
-   --       complexity = complexity,
-   --       function_type = "main_chunk"
-   --    })
-   -- else
-   --    chstate:warn_range("561", node, {
-   --       complexity = complexity,
-   --       function_type = node[1][1] and node[1][1].implicit and "method" or "function",
-   --       function_name = node.name
-   --    })
-   -- end
 end
 
 local CyclomaticComplexityMetric = utils.class()
@@ -68,8 +48,8 @@ function CyclomaticComplexityMetric:calc_exprs(exprs)
 end
 
 function CyclomaticComplexityMetric:calc_item_Eval(item)
-   if item.node then
-      self:calc_expr(item.node)
+   if item.expr then
+      self:calc_expr(item.expr)
    end
 end
 
@@ -152,12 +132,6 @@ function CyclomaticComplexityMetric:report(chstate, line)
    self.count = 1
    self:calc_stmts(line.node[2])
    self:calc_items(line.items)
-   -- local node = line.node
-   -- if node.location then
-   --    for key,value in pairs(line.node.location) do
-   --       chstate:log(value)
-   --    end
-   -- end
    warn_cyclomatic_complexity(chstate, line, self.count)
 end
 
