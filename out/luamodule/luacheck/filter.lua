@@ -282,7 +282,7 @@ local function filters(opts, warning)
    end
 
    if warning.code == "561" then
-      local max_complexity = get_max_cyclomatic_complexity(opts, warning)
+      local max_complexity = get_max_cyclomatic_complexity(opts)
 
       if (not max_complexity or warning.complexity <= max_complexity) then
          return true
@@ -339,7 +339,7 @@ local function filter_file_report(report)
             end
 
             if issue.code == "561" then
-               issue.max_complexity = get_max_cyclomatic_complexity(opts, issue)
+               issue.max_complexity = get_max_cyclomatic_complexity(opts)
             end
 
             if issue.code:match("1[24][23]") then
