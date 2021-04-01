@@ -45,6 +45,7 @@
 
 ### 4. 使用过多相同的GetTable操作(814)
 - 在同一个function中
+- 没有对table.xxx.xxx进行赋值
 - 调用同一个table.xxx.xxx 2次及以上
 
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_814.png" width="800"/></br>
