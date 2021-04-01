@@ -15,6 +15,7 @@
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_3.png" width="550"/></br>
 
 - 配置lua.luacheckPath字段，使其指向luacheck package中的luacheck.bat
+
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_4.png" width="550"/></br>
 
 ### 2. 配置luacheck.bat
@@ -26,6 +27,23 @@
 - 打开lua文件，按 ctrl+shift+M 打开Problems栏，如果以上路径配置正确，即可看到luacheck警告日志
 
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_6.png" width="500"/></br>
+
+## 额外的检查规则
+### 1. 不标准的函数命名(811)
+- 非大写字母开头的函数名
+### 2. 不推荐的字符连接方式(812)
+- 使用'..'连接字符串
+### 3. 没有直接使用常量(813)
+- 将一个number数据放入table.XXX中
+- 没有对table.xxx进行二次赋值
+- 对table.xxx进行了引用
+### 4. 使用过多相同的GetTable操作(814)
+- 在同一个function中
+- 调用同一个table.xxx.xxx 2次及以上
+### 5. 在Tick中新建C++对象(815)
+- 在Tick函数中
+- 调用UE4.Vector2D
+
 
 ## 相关文档
 - luacheck参数配置指南：https://luacheck.readthedocs.io/en/stable/
