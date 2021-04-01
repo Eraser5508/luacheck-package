@@ -14,7 +14,7 @@
 
 ### 2. 打开设置界面，找到vscode-lua设置中的Luacheck Path选项，点击Edit in settings.json
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_2.png" width="350"/></br>
-<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_3.png" width="550"/></br>
+<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_3.png" width="700"/></br>
 
 ### 3. 配置lua.luacheckPath字段，使其指向luacheck package中的luacheck.bat
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_4.png" width="550"/></br>
