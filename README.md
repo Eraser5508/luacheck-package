@@ -1,11 +1,17 @@
-# luacheck for VS Code
+# luacheck package
 ## 功能介绍
-- 此工程为VS Code的拓展插件，安装后，使用者能够在VS Code下方实时查看lua代码的警告及报错信息，提高开发效率
-- 静态解析策略基于luacheck
-- 该插件在https://github.com/kingsoftgames/vscode-luacheck 的基础上拓展开发，并加入了luacheck中的一些新特性
-## 安装方法
-- 将luacheck文件夹直接放入VS Code的插件默认存放位置即可
-- VS Code插件默认存放位置：C:\Users\用户名\\\.vscode\extensions
+- 此工程为luacheck的整合包，可快速为vs code接入luacheck
+- 需要结合VS Code的vscode-lua插件使用，配置相关文件路径后可直接生效
+- 包含最新版luacheck的所有检查规则，同时额外增加了某些自定义规则
+## 使用方法
+### 1. 配置vscode-lua插件
+- 在VS Code中搜索vscode-lua插件并安装
+- 打开设置界面，找到vscode-lua设置中的Luacheck Path选项，点击Edit in settings.json
+- 配置lua.luacheckPath字段，使其指向luacheck package中的luacheck.bat
+### 2. 配置luacheck.bat
+- 打开luacheck.bat，修改其中路径相关的字段，使其指向自己电脑上luacheck package的相应位置
+### 3. 完成
+- 打开lua文件，按 ctrl+shift+M 打开Problems栏，如果以上路径配置正确，即可看到luacheck警告日志
 ## 相关文档
 - luacheck参数配置指南：https://luacheck.readthedocs.io/en/stable/
 - luacheck源代码：https://github.com/mpeterv/luacheck
