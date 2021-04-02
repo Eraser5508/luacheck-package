@@ -7,7 +7,6 @@ local tgetn = table.getn
 local slen = string.len
 local sfind = string.find
 local ssub = string.sub
-local smatch = string.match
 
 stage.warnings = {
    ["813"] = {message_format = "'{variable_name}' is a constant variable, try to use its value directly?",
@@ -21,22 +20,38 @@ stage.warnings = {
 local variables_set = {}
 local variables_get = {}
 
+local function find_function(function_name)
+   for _, value in ipairs(variables_get) do
+      if value.function_name == function_name then
+         return value
+      end
+   end
+   return nil
+end
+
+local function find_variable(variables_info, varibale_name)
+   for _, value in ipairs(variables_info) do
+      if value.name == varibale_name then
+         return value
+      end
+   end
+   return nil
+end
+
 local function warn_set_table(chstate)
    for _, value_set in ipairs(variables_set) do
       if value_set.is_const == true and value_set.function_name == "unknown" then
          local is_get = false
          for _, value_function in ipairs (variables_get) do
-            for _, value_variable in ipairs(value_function.variables_info) do
-               if value_variable.name == value_set.name then
-                  for _, value_node in ipairs(value_variable.nodes) do
-                     if value_node.offset ~= value_set.node.offset then
-                        is_get = true
-                        chstate:warn_range("813", value_node, {
-                           variable_name = value_variable.name
-                        })
-                     end
+            local variable_info = find_variable(value_function.variables_info, value_set.name)
+            if variable_info then
+               for _, value_node in ipairs(variable_info.nodes) do
+                  if value_node.offset ~= value_set.node.offset then
+                     is_get = true
+                     chstate:warn_range("813", value_node, {
+                        variable_name = variable_info.name
+                     })
                   end
-                  break
                end
             end
          end
@@ -77,13 +92,12 @@ local function warn_object_creation_in_tick(chstate, function_info)
       index = index + 1
       temp_name = ssub(temp_name, index)
       if temp_name == "Tick" then
-         for _, value_variable in ipairs(function_info.variables_info) do
-            if value_variable.name == "UE4.FVector2D" then
-               for _, node in ipairs(value_variable.nodes) do
-                  chstate:warn_range("815", node, {
-                     variable_name = value_variable.name
-                  })
-               end
+         local variable_info = find_variable(function_info.variables_info, "UE4.FVector2D")
+         if variable_info then
+            for _, node in ipairs(variable_info.nodes) do
+               chstate:warn_range("815", node, {
+                  variable_name = variable_info.name
+               })
             end
          end
       end
@@ -122,40 +136,31 @@ local function save_variable_set(function_name, name, node, is_number, depth)
 end
 
 local function save_variable_get(function_name, name, node, depth)
-   local is_new_function = true
-   local is_new_name = true
-   local is_new_node = true
-
    local new_variable = {}
    new_variable.name = name
    new_variable.depth = depth
    new_variable.nodes = {node}
 
-   for _, value_function in ipairs(variables_get) do
-      if value_function.function_name == function_name then
-         for _, value_variable in ipairs(value_function.variables_info) do
-            if value_variable.name == name then
-               for _, value_node in ipairs(value_variable.nodes) do
-                  if value_node.offset == node.offset then
-                     is_new_node = false
-                     break
-                  end
-               end
-               if is_new_node then
-                  tinsert(value_variable.nodes, node)
-               end
-               is_new_name = false
+   local function_info = find_function(function_name)
+   if function_info then
+      local variable_info = find_variable(function_info.variables_info, name)
+      if variable_info then
+         local is_new_node = true
+         for _, value in ipairs(variable_info.nodes) do
+            if value.offset == node.offset then
+               is_new_node = false
                break
             end
          end
-         if is_new_name then
-            tinsert(value_function.variables_info, new_variable)
+         if is_new_node == true then
+            tinsert(variable_info.nodes, node)
          end
-         is_new_function = false
-         break
+      end
+      if variable_info == nil then
+         tinsert(function_info.variables_info, new_variable)
       end
    end
-   if is_new_function == true then
+   if function_info == nil then
       local new_function = {
          function_name = function_name,
          variables_info = {new_variable}
