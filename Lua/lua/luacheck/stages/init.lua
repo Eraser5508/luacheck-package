@@ -26,7 +26,7 @@ stages.names = {
    "detect_unreachable_code",
    "detect_unused_fields",
    "detect_unused_locals",
-   "detect_nonstandard_function_name",
+   "detect_function_name",
    "detect_string_concat",
    "detect_get_set_table",
 }

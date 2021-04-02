@@ -33,7 +33,7 @@ local functions = {
    {name = "run", module = "stages.detect_unreachable_code"},
    {name = "run", module = "stages.detect_unused_fields"},
    {name = "run", module = "stages.detect_unused_locals"},
-   {name = "run", module = "stages.detect_nonstandard_function_name"},
+   {name = "run", module = "stages.detect_function_name"},
    {name = "run", module = "stages.detect_string_concat"},
    {name = "run", module = "stages.detect_get_set_table"},
    {name = "filter", module = "filter"},
