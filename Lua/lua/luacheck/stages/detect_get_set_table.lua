@@ -7,7 +7,6 @@ local tgetn = table.getn
 local slen = string.len
 local sfind = string.find
 local ssub = string.sub
-local smatch = string.match
 
 stage.warnings = {
    ["813"] = {message_format = "'{variable_name}' is a constant variable, try to use its value directly?",
@@ -112,7 +111,7 @@ end
 local function warn_object_creation_in_tick(chstate, function_info)
    if find_function_in_tick(function_info.function_name) then
       for _, value in pairs(function_info.variables_info) do
-         if smatch(value.name, "UE4.F") then
+         if ssub(value.name, 1, 5) == "UE4.F" then
             for _, node in ipairs(value.nodes) do
                chstate:warn_range("815", node, {
                   variable_name = value.name
@@ -158,10 +157,11 @@ local function save_variable_set(function_name, name, node, is_number, depth)
 end
 
 local function save_variable_get(function_name, name, node, depth)
-   local new_variable = {}
-   new_variable.name = name
-   new_variable.depth = depth
-   new_variable.nodes = {node}
+   local new_variable = {
+      name = name,
+      depth = depth,
+      nodes = {node}
+   }
 
    local function_info = find_function_in_get(function_name)
    if function_info then
