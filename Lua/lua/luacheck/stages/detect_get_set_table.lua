@@ -98,7 +98,7 @@ end
 local function warn_same_get_table_operation(chstate, function_info)
    for _, value_variable in ipairs(function_info.variables_info) do
       if tgetn(value_variable.nodes) > 1 and value_variable.depth > 1 then
-         if find_variable_in_set(function_info.function_name, value_variable.name) then
+         if find_variable_in_set(function_info.function_name, value_variable.name) == nil then
             for _, node in ipairs(value_variable.nodes) do
                chstate:warn_range("814", node, {
                   variable_name = value_variable.name
