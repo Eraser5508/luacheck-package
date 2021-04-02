@@ -30,6 +30,7 @@ local function get_function_name(function_name)
       temp_name = ssub(temp_name, index)
       return temp_name
    end
+   return nil
 end
 
 local function find_function_in_get(function_name)
@@ -38,6 +39,7 @@ local function find_function_in_get(function_name)
          return value
       end
    end
+   return nil
 end
 
 local function find_variable_in_get(variables_info, varibale_name)
@@ -46,6 +48,7 @@ local function find_variable_in_get(variables_info, varibale_name)
          return value
       end
    end
+   return nil
 end
 
 local function find_variable_in_set(function_name, variable_name)
@@ -54,6 +57,7 @@ local function find_variable_in_set(function_name, variable_name)
          return value
       end
    end
+   return nil
 end
 
 local function find_function_in_tick(function_name)
@@ -62,6 +66,7 @@ local function find_function_in_tick(function_name)
          return value
       end
    end
+   return nil
 end
 
 local function warn_set_table(chstate)
