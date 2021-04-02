@@ -22,22 +22,6 @@ local variables_set = {}
 local variables_get = {}
 local functions_in_tick = {"Tick"}
 
-local function find_function(function_name)
-   for _, value in ipairs(variables_get) do
-      if value.function_name == function_name then
-         return value
-      end
-   end
-end
-
-local function find_variable(variables_info, varibale_name)
-   for _, value in ipairs(variables_info) do
-      if value.name == varibale_name then
-         return value
-      end
-   end
-end
-
 local function get_function_name(function_name)
    local temp_name = function_name
    local _, index = sfind(temp_name, "%.", 1)
@@ -48,12 +32,44 @@ local function get_function_name(function_name)
    end
 end
 
+local function find_function_in_get(function_name)
+   for _, value in ipairs(variables_get) do
+      if value.function_name == function_name then
+         return value
+      end
+   end
+end
+
+local function find_variable_in_get(variables_info, varibale_name)
+   for _, value in ipairs(variables_info) do
+      if value.name == varibale_name then
+         return value
+      end
+   end
+end
+
+local function find_variable_in_set(function_name, variable_name)
+   for _, value in ipairs(variables_set) do
+      if value.name == variable_name and value.function_name == function_name then
+         return value
+      end
+   end
+end
+
+local function find_function_in_tick(function_name)
+   for _, value in ipairs(functions_in_tick) do
+      if value == get_function_name(function_name) then
+         return value
+      end
+   end
+end
+
 local function warn_set_table(chstate)
    for _, value_set in ipairs(variables_set) do
       if value_set.is_const == true and value_set.function_name == "unknown" then
          local is_get = false
          for _, value_function in ipairs (variables_get) do
-            local variable_info = find_variable(value_function.variables_info, value_set.name)
+            local variable_info = find_variable_in_get(value_function.variables_info, value_set.name)
             if variable_info then
                for _, value_node in ipairs(variable_info.nodes) do
                   if value_node.offset ~= value_set.node.offset then
@@ -77,14 +93,7 @@ end
 local function warn_same_get_table_operation(chstate, function_info)
    for _, value_variable in ipairs(function_info.variables_info) do
       if tgetn(value_variable.nodes) > 1 and value_variable.depth > 1 then
-         local is_set = false
-         for _, value_set in ipairs(variables_set) do
-            if value_set.name == value_variable.name and value_set.function_name == function_info.function_name then
-               is_set = true
-               break
-            end
-         end
-         if is_set == false then
+         if find_variable_in_set(function_info.function_name, value_variable.name) then
             for _, node in ipairs(value_variable.nodes) do
                chstate:warn_range("814", node, {
                   variable_name = value_variable.name
@@ -96,14 +105,7 @@ local function warn_same_get_table_operation(chstate, function_info)
 end
 
 local function warn_object_creation_in_tick(chstate, function_info)
-   local is_in_tick = false
-   for _, value in ipairs(functions_in_tick) do
-      if value == get_function_name(function_info.function_name) then
-         is_in_tick = true
-         break
-      end
-   end
-   if is_in_tick == true then
+   if find_function_in_tick(function_info.function_name) then
       for _, value in pairs(function_info.variables_info) do
          if smatch(value.name, "UE4.F") then
             for _, node in ipairs(value.nodes) do
@@ -156,9 +158,9 @@ local function save_variable_get(function_name, name, node, depth)
    new_variable.depth = depth
    new_variable.nodes = {node}
 
-   local function_info = find_function(function_name)
+   local function_info = find_function_in_get(function_name)
    if function_info then
-      local variable_info = find_variable(function_info.variables_info, name)
+      local variable_info = find_variable_in_get(function_info.variables_info, name)
       if variable_info then
          local is_new_node = true
          for _, value in ipairs(variable_info.nodes) do
