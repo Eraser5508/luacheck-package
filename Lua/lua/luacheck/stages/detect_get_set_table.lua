@@ -7,6 +7,7 @@ local tgetn = table.getn
 local slen = string.len
 local sfind = string.find
 local ssub = string.sub
+local smatch = string.match
 
 stage.warnings = {
    ["813"] = {message_format = "'{variable_name}' is a constant variable, try to use its value directly?",
@@ -19,6 +20,7 @@ stage.warnings = {
 
 local variables_set = {}
 local variables_get = {}
+local functions_in_tick = {"Tick"}
 
 local function find_function(function_name)
    for _, value in ipairs(variables_get) do
@@ -26,7 +28,6 @@ local function find_function(function_name)
          return value
       end
    end
-   return nil
 end
 
 local function find_variable(variables_info, varibale_name)
@@ -35,7 +36,16 @@ local function find_variable(variables_info, varibale_name)
          return value
       end
    end
-   return nil
+end
+
+local function get_function_name(function_name)
+   local temp_name = function_name
+   local _, index = sfind(temp_name, "%.", 1)
+   if index then
+      index = index + 1
+      temp_name = ssub(temp_name, index)
+      return temp_name
+   end
 end
 
 local function warn_set_table(chstate)
@@ -86,17 +96,19 @@ local function warn_same_get_table_operation(chstate, function_info)
 end
 
 local function warn_object_creation_in_tick(chstate, function_info)
-   local temp_name = function_info.function_name
-   local _, index = sfind(temp_name, "%.", 1)
-   if index then
-      index = index + 1
-      temp_name = ssub(temp_name, index)
-      if temp_name == "Tick" then
-         local variable_info = find_variable(function_info.variables_info, "UE4.FVector2D")
-         if variable_info then
-            for _, node in ipairs(variable_info.nodes) do
+   local is_in_tick = false
+   for _, value in ipairs(functions_in_tick) do
+      if value == get_function_name(function_info.function_name) then
+         is_in_tick = true
+         break
+      end
+   end
+   if is_in_tick == true then
+      for _, value in pairs(function_info.variables_info) do
+         if smatch(value.name, "UE4.F") then
+            for _, node in ipairs(value.nodes) do
                chstate:warn_range("815", node, {
-                  variable_name = variable_info.name
+                  variable_name = value.name
                })
             end
          end
@@ -105,9 +117,12 @@ local function warn_object_creation_in_tick(chstate, function_info)
 end
 
 local function warn_get_table(chstate)
+   local num = tgetn(functions_in_tick)
    for _, value_function in ipairs(variables_get) do
       warn_same_get_table_operation(chstate, value_function)
-      warn_object_creation_in_tick(chstate, value_function)
+      if num > 0 then
+         warn_object_creation_in_tick(chstate, value_function)
+      end
    end
 end
 
@@ -169,6 +184,19 @@ local function save_variable_get(function_name, name, node, depth)
    end
 end
 
+local function save_function_in_tick(function_name)
+   local is_new_function = true
+   for _, value in ipairs(functions_in_tick) do
+      if value == function_name then
+         is_new_function = false
+         break
+      end
+   end
+   if is_new_function == true then
+      tinsert(functions_in_tick, function_name)
+   end
+end
+
 local function combline_variable_name(node, depth)
    local node_1 = node[1]
    local node_2 = node[2]
@@ -199,14 +227,19 @@ end
 
 local function search_variable_get(node, function_name)
    local tag = node.tag
+   local lhs = node[1]
+   local rhs = node[2]
+   if tag == "Invoke" then
+      if get_function_name(function_name) == "Tick" and lhs[1] == "self" and lhs.tag == "Id" then
+         save_function_in_tick(rhs[1])
+      end
+   end
    if tag == "Index" then
       local name, depth = combline_variable_name(node, 0)
       if name then
          save_variable_get(function_name, name, node, depth)
       end
    elseif tag == "Set" then
-      local lhs = node[1]
-      local rhs = node[2]
       search_variable_set(lhs[1], rhs[1].tag == "Number", function_name)
    elseif type(node) == "table" then
       for _, next_node in ipairs(node) do
