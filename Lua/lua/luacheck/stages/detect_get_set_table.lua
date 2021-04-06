@@ -1,5 +1,8 @@
 local stage = {}
 
+local ipairs = ipairs
+local type = type
+
 local tconcat = table.concat
 local tinsert = table.insert
 local tgetn = table.getn
@@ -110,7 +113,7 @@ end
 
 local function warn_object_creation_in_tick(chstate, function_info)
    if find_function_in_tick(function_info.function_name) then
-      for _, value in pairs(function_info.variables_info) do
+      for _, value in ipairs(function_info.variables_info) do
          if ssub(value.name, 1, 5) == "UE4.F" then
             for _, node in ipairs(value.nodes) do
                chstate:warn_range("815", node, {

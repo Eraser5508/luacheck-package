@@ -1,5 +1,7 @@
 local stage = {}
 
+local ipairs = ipairs
+
 local sfind = string.find
 local sbyte = string.byte
 local sub = string.sub

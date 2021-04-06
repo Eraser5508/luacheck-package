@@ -1,5 +1,8 @@
 local stage = {}
 
+local ipairs = ipairs
+local type = type
+
 local tinsert = table.insert
 
 stage.warnings = {
