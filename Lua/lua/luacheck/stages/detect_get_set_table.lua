@@ -11,7 +11,7 @@ local ssub = string.sub
 stage.warnings = {
    ["813"] = {message_format = "'{variable_name}' is a constant variable, try to use its value directly?",
       fields = {"variable_name"}},
-   ["814"] = {message_format = "multiple same 'GetTable' operation '{variable_name}'",
+   ["814"] = {message_format = "multiple same 'GetTable' instruction '{variable_name}'",
       fields = {"variable_name"}},
    ["815"] = {message_format = "C++ objects creation '{variable_name}' in 'Tick' function",
       fields = {"variable_name"}}
