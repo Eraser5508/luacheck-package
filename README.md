@@ -56,6 +56,12 @@
 
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_815.png" width="800"/></br>
 
+### 6. 使用arg作为参数名(911)
+
+- function中的参数名为"arg"
+
+<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_911.png" width="800"/></br>
+
 ## 相关文档
 - luacheck参数配置指南：https://luacheck.readthedocs.io/en/stable/
 - luacheck源代码：https://github.com/mpeterv/luacheck
