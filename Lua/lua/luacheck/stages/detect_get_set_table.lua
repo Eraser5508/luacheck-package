@@ -97,7 +97,7 @@ end
 local function warn_same_get_table_operation(chstate, function_info)
    for _, value_variable in ipairs(function_info.variables_info) do
       if tgetn(value_variable.nodes) > 1 and value_variable.depth > 1 then
-         if find_variable_in_set(function_info.function_name, value_variable.name) == nil then
+         if not find_variable_in_set(function_info.function_name, value_variable.name) then
             for _, node in ipairs(value_variable.nodes) do
                chstate:warn_range("814", node, {
                   variable_name = value_variable.name
@@ -178,11 +178,11 @@ local function save_variable_get(function_name, name, node, depth)
             tinsert(variable_info.nodes, node)
          end
       end
-      if variable_info == nil then
+      if not variable_info then
          tinsert(function_info.variables_info, new_variable)
       end
    end
-   if function_info == nil then
+   if not function_info then
       local new_function = {
          function_name = function_name,
          variables_info = {new_variable}
