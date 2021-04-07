@@ -62,6 +62,12 @@
 
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_911.png" width="800"/></br>
 
+### 7. 使用分号分隔语句(912)
+
+- 使用";"分隔语句
+
+<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_912.png" width="800"/></br>
+
 ## 相关文档
 - luacheck参数配置指南：https://luacheck.readthedocs.io/en/stable/
 - luacheck源代码：https://github.com/mpeterv/luacheck
