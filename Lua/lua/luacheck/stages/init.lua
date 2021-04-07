@@ -28,8 +28,9 @@ stages.names = {
    "detect_unused_locals",
    "detect_function_definition",
    "detect_string_concat",
-   "detect_semicolons",
    "detect_get_set_table",
+   "detect_semicolons",
+   "detect_array_definition",
 }
 
 stages.modules = {}
