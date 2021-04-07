@@ -929,6 +929,7 @@ function parse_block(state, opening_token_range, opening_token, block)
          if not after_statement then
             table.insert(state.hanging_semicolons, copy_range(state))
          end
+         table.insert(state.semicolons, copy_range(state))
 
          -- Skip ";".
          skip_token(state)
@@ -970,8 +971,10 @@ function new_state(src, line_offsets, line_lengths)
       line_endings = {},
       -- Array of {contents = string} with range info.
       comments = {},
-       -- Array of ranges of semicolons not following a statement.
-      hanging_semicolons = {}
+      -- Array of ranges of semicolons not following a statement.
+      hanging_semicolons = {},
+      -- Array of ranges of semicolons
+      semicolons = {},
    }
 end
 
@@ -986,7 +989,7 @@ function parser.parse(src, line_offsets, line_lengths)
    local state = new_state(src, line_offsets, line_lengths)
    skip_token(state)
    local ast = parse_block(state)
-   return ast, state.comments, state.code_lines, state.line_endings, state.hanging_semicolons,
+   return ast, state.comments, state.code_lines, state.line_endings, state.hanging_semicolons, state.semicolons,
       state.lexer.line_offsets, state.lexer.line_lengths
 end
 

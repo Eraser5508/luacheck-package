@@ -35,6 +35,7 @@ local functions = {
    {name = "run", module = "stages.detect_unused_locals"},
    {name = "run", module = "stages.detect_function_definition"},
    {name = "run", module = "stages.detect_string_concat"},
+   {name = "run", module = "stages.detect_semicolons"},
    {name = "run", module = "stages.detect_get_set_table"},
    {name = "filter", module = "filter"},
    {name = "normalize", module = "options"}
