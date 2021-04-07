@@ -68,6 +68,12 @@
 
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_912.png" width="800"/></br>
 
+### 8. 显式指定数组下标从0开始(913)
+
+- 对table[0]进行赋值
+
+<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_913.png" width="800"/></br>
+
 ## 相关文档
 - luacheck参数配置指南：https://luacheck.readthedocs.io/en/stable/
 - luacheck源代码：https://github.com/mpeterv/luacheck
