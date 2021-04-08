@@ -51,7 +51,7 @@
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_814.png" width="800"/></br>
 
 ### 5. 在Tick中新建C++对象(815)
-- 在Tick函数中
+- 在Tick函数及其调用的函数中
 - 调用外部函数新建C++对象
 
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_815.png" width="800"/></br>
