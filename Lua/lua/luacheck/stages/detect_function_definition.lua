@@ -13,18 +13,32 @@ stage.warnings = {
       fields = {}}
 }
 
-local function warn_function_name(chstate, node)
-   local name = node.name
-   if name then
-      local _, index = sfind(name, "%.", 1)
-      if not index then
-         index = 0
+local function is_closure_function(node_parent)
+   if node_parent then
+      if node_parent[1] == "self" and node_parent.tag == "Id" then
+         return false
       end
-      local num = sbyte(name, index + 1)
-      if num < 65 or num > 91 then
-         chstate:warn_range("811", node, {
-            function_name = node.name
-         })
+   end
+   return true
+end
+
+local function warn_function_name(chstate, node)
+   local temp_table = node[1]
+   if temp_table then
+      if is_closure_function(temp_table[1]) == false then
+         local name = node.name
+         if name then
+            local _, index = sfind(name, "%.", 1)
+            if not index then
+               index = 0
+            end
+            local num = sbyte(name, index + 1)
+            if num < 65 or num > 91 then
+               chstate:warn_range("811", node, {
+                  function_name = node.name
+               })
+            end
+         end
       end
    end
 end
