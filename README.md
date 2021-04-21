@@ -28,6 +28,7 @@
 ## 额外检查规则
 ### 1. 不标准的函数命名(811)
 - 非大写字母开头的函数名
+- 函数名为单个字符
 
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_811.png" width="800"/></br>
 
