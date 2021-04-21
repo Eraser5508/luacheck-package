@@ -5,12 +5,13 @@ local ipairs = ipairs
 local sfind = string.find
 local sbyte = string.byte
 local sub = string.sub
+local slen = string.len
 
 stage.warnings = {
-   ["811"] = {message_format = "name of function '{function_name}' should start with an uppercase letter",
+   ["811"] = {message_format = "nonstandard function name '{function_name}'",
       fields = {"function_name"}},
    ["911"] = {message_format = "'arg' is not allowed as a parameter name",
-      fields = {}}
+      fields = {}},
 }
 
 local function is_closure_function(node_parent)
@@ -32,8 +33,9 @@ local function warn_function_name(chstate, node)
             if not index then
                index = 0
             end
-            local num = sbyte(name, index + 1)
-            if num < 65 or num > 91 then
+            local num_byte = sbyte(name, index + 1)
+            local num_len = slen(name) - index
+            if num_byte < 65 or num_byte > 91 or num_len < 2 then
                chstate:warn_range("811", node, {
                   function_name = node.name
                })
