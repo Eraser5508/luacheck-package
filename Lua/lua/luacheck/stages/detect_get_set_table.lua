@@ -149,12 +149,13 @@ local function save_variable_set(function_name, name, node, is_number, depth)
       end
    end
    if is_new == true then
-      local new_variable = {}
-      new_variable.function_name = function_name
-      new_variable.name = name
-      new_variable.is_const = is_const
-      new_variable.node = node
-      new_variable.depth = depth
+      local new_variable = {
+         function_name = function_name,
+         name = name,
+         is_const = is_const,
+         node = node,
+         depth = depth,
+      }
       tinsert(variables_set, new_variable)
    end
 end
