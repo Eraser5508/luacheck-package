@@ -154,7 +154,7 @@ local function save_variable_set(function_name, name, node, is_number, depth)
          name = name,
          is_const = is_const,
          node = node,
-         depth = depth,
+         depth = depth
       }
       tinsert(variables_set, new_variable)
    end
