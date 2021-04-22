@@ -77,7 +77,8 @@
 
 ### 9. 创建table时混用array与hash(914)
 
-- 构造table时既显式指定数组下标，又使用默认数组索引
+- 显式指定数组下标
+- 使用默认数组索引
 
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_914.png" width="800"/></br>
 
