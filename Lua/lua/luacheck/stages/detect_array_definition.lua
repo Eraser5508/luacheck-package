@@ -4,26 +4,39 @@ local ipairs = ipairs
 
 stage.warnings = {
    ["913"] = {message_format = "specify the array subscript from '0' explicitly is forbidden",
+      fields = {}},
+   ["914"] = {message_format = "mix array and hash when constructing a table",
       fields = {}}
 }
 
-local function warn_array_definition(chstate, node)
+local function warn_array_definition_zero(chstate, node)
    chstate:warn_range("913", node)
+end
+
+local function warn_array_definition_mix(chstate, node)
+   chstate:warn_range("914", node)
 end
 
 local function search_array_construct(chstate, node)
    if node.tag == "Table" then
+      local hasArray = false
+      local hasHash = false
       for _, value in ipairs(node) do
          if value.tag == "Pair" then
+            hasArray = true
             local array_key = value[1]
             local array_value = value[2]
             if array_key and array_key.tag == "Number" and array_key[1] == "0" then
-               warn_array_definition(chstate, value)
+               warn_array_definition_zero(chstate, value)
             end
-            if array_value and array_value.tag == "Table" then
-               search_array_construct(chstate, array_value)
-            end
+            search_array_construct(chstate, array_value)
          end
+         if value.tag == "String" then
+            hasHash = true
+         end
+      end
+      if hasArray == true and hasHash == true then
+         warn_array_definition_mix(chstate, node)
       end
    end
 end
@@ -32,7 +45,7 @@ local function search_array_set(chstate, node)
    if node.tag == "Index" then
       for _, value in ipairs(node) do
          if value.tag == "Number" and value[1] == "0" then
-            warn_array_definition(chstate, value)
+            warn_array_definition_zero(chstate, value)
          end
       end
    end
