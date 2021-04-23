@@ -12,7 +12,7 @@
 ### 1. 在VS Code中搜索vscode-luacheck插件并安装
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_1.png" width="450"/></br>
 
-### 2. 配置环境变量，分别在LUA_DEV，LUA_PATH，PATH系统变量中添加一条环境变量，指向工程中的文件夹位置，具体路径如下图所示
+### 2. 配置环境变量，分别在LUA_DEV，LUA_PATH，Path系统变量中添加一条环境变量，指向工程中的文件夹位置，具体路径如下图所示
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_2.png"></br>
 
 ### 3. 打开luacheck.bat，修改其中路径相关的字段（有多个），使其指向自己电脑上luacheck package的相应位置
