@@ -6,24 +6,20 @@
 - [相关文档](#相关文档)
 ## 功能介绍
 - 此工程为luacheck的整合包，可快速为vs code接入luacheck
-- 需要结合VS Code的vscode-lua插件使用，配置相关文件路径后可直接生效
+- 需要结合VS Code的vscode-luacheck插件使用，配置相关文件路径以及系统环境变量后可直接生效
 - 包含最新版luacheck的所有检查规则，同时额外增加了某些自定义规则
 ## 使用方法
-### 1. 在VS Code中搜索vscode-lua插件并安装
+### 1. 在VS Code中搜索vscode-luacheck插件并安装
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_1.png" width="350"/></br>
 
-### 2. 打开设置界面，找到vscode-lua设置中的Luacheck Path选项，点击Edit in settings.json
+### 2. 配置环境变量，分别在LUA_DEV，LUA_PATH，PATH系统变量中添加一条环境变量，指向工程中的文件夹位置，具体路径如下图所示
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_2.png" width="350"/></br>
-<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_3.png" width="700"/></br>
 
-### 3. 配置lua.luacheckPath字段，使其指向luacheck package中的luacheck.bat
-<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_4.png" width="550"/></br>
+### 3. 打开luacheck.bat，修改其中路径相关的字段（有多个），使其指向自己电脑上luacheck package的相应位置
+<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_3.png" width="450"/></br>
 
-### 4. 打开luacheck.bat，修改其中路径相关的字段（有多个），使其指向自己电脑上luacheck package的相应位置
-<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_5.png" width="450"/></br>
-
-### 5. 打开lua文件，按 ctrl+shift+M 打开Problems栏，如果以上路径配置正确，即可看到luacheck警告日志
-<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_6.png" width="500"/></br>
+### 4. 打开lua文件，按 ctrl+shift+M 打开Problems栏，如果以上路径配置正确，即可看到luacheck警告日志
+<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_4.png" width="500"/></br>
 
 ## 额外检查规则
 ### 1. 不标准的函数命名(811)
