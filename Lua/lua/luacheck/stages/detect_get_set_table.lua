@@ -25,12 +25,14 @@ local variables_get = {}
 local functions_in_tick = {"Tick"}
 
 local function get_function_name(function_name)
-   local temp_name = function_name
-   local _, index = sfind(temp_name, "%.", 1)
-   if index then
-      index = index + 1
-      temp_name = ssub(temp_name, index)
-      return temp_name
+   if function_name then
+      local temp_name = function_name
+      local _, index = sfind(temp_name, "%.", 1)
+      if index then
+         index = index + 1
+         temp_name = ssub(temp_name, index)
+         return temp_name
+      end
    end
    return nil
 end

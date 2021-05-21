@@ -13,14 +13,15 @@ end
 -- The column is never larger than the line length.
 -- This can be called if line length is not yet known.
 function CheckState:offset_to_column(line, offset)
-   local line_length = self.line_lengths[line]
-   local column = offset - self.line_offsets[line] + 1
-
-   if not line_length then
-      return column
+   if self.line_lengths[line] and self.line_offsets[line] then
+      local line_length = self.line_lengths[line]
+      local column = offset - self.line_offsets[line] + 1
+      if not line_length then
+         return column
+      end
+      return math.max(1, math.min(line_length, column))
    end
-
-   return math.max(1, math.min(line_length, column))
+   return 0
 end
 
 function CheckState:warn_column_range(code, range, warning)
