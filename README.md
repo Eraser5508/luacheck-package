@@ -21,6 +21,10 @@
 ### 4. 打开lua文件，按 ctrl+shift+M 打开Problems栏，如果以上路径配置正确，即可看到luacheck警告日志
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_4.png" width="500"/></br>
 
+### 5. 找到vscode-lua插件的安装位置，使用工程中的extension.js文件覆盖原插件中的同名文件（可解决编辑器代码提示变慢的问题）
+<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_5.png" width="1000"/></br>
+<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_6.png" width="1000"/></br>
+
 ## 额外检查规则
 ### 1. 不标准的函数命名(811)
 - 非大写字母开头的函数名
