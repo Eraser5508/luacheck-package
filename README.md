@@ -81,6 +81,12 @@
 
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_914.png" width="800"/></br>
 
+### 10. 二元运算符两边未加空格(915)
+
+- 使用"+" "-" "<"等二元运算符时两边未加空格（乘幂运算符"^"除外）
+
+<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_915.png" width="800"/></br>
+
 ## 相关文档
 - luacheck参数配置指南：https://luacheck.readthedocs.io/en/stable/
 - luacheck源代码：https://github.com/mpeterv/luacheck
