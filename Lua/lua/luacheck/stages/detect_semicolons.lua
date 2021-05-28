@@ -1,7 +1,7 @@
 local stage = {}
 
 stage.warnings = {
-   ["912"] = {message_format = "it is not allowed to use semicolons to seperate statements",
+   ["912"] = {message_format = "do not use semicolons to seperate statements",
       fields = {}}
 }
 
