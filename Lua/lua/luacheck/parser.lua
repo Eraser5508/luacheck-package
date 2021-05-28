@@ -993,4 +993,8 @@ function parser.parse(src, line_offsets, line_lengths)
       state.lexer.line_offsets, state.lexer.line_lengths
 end
 
+function parser.get_binary_operators()
+   return binary_operators
+end
+
 return parser

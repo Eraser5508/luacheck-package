@@ -31,6 +31,7 @@ stages.names = {
    "detect_get_set_table",
    "detect_semicolons",
    "detect_array_definition",
+   "detect_operator",
 }
 
 stages.modules = {}
