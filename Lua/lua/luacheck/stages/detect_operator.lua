@@ -9,7 +9,7 @@ local type = type
 local tinsert = table.insert
 
 stage.warnings = {
-   ["915"] = {message_format = "you need to add space on both sides of operator '{operator}'",
+   ["915"] = {message_format = "spaces should be added on both sides of operator '{operator}'",
       fields = {"operator"}},
 }
 
