@@ -7,6 +7,7 @@
 ## 功能介绍
 - 此工程为luacheck的整合包，可快速为vs code接入luacheck
 - 需要结合VS Code的vscode-luacheck插件使用
+- 下载工程后可一键生成相关配置
 - 包含最新版luacheck的所有检查规则，同时额外增加了某些自定义规则
 ## 使用方法
 ### 1. 在VS Code中搜索vscode-luacheck插件并安装
