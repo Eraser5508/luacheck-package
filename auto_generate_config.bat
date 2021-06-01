@@ -5,7 +5,7 @@ cd /d %~dp0
 set file_path_1=%cd%\Lua
 set file_path_2=%file_path_1:\=\\%
 set head=@echo off
-set config="%file_path_1%\lua" -e "package.path=\"%file_path_2%\\lua/?.lua;%file_path_2%\\lua/?/init.lua;%file_path_2%\\2.2\\lua\\?.lua;\"..package.path; package.cpath=\"%file_path_2%\\clibs/?.dll;\"..package.cpath" -e "local k,l,_=pcall(require,\"luarocks.loader\") _=k and l.add_context(\"luacheck\",\"0.24.0-2\")" "F:\Github Workspace\luacheck-package\Lua\rocks\luacheck\0.24.0-2\bin\luacheck" %%*
+set config="%file_path_1%\lua" -e "package.path=\"%file_path_2%\\lua/?.lua;%file_path_2%\\lua/?/init.lua;%file_path_2%\\2.2\\lua\\?.lua;\"..package.path; package.cpath=\"%file_path_2%\\clibs/?.dll;\"..package.cpath" -e "local k,l,_=pcall(require,\"luarocks.loader\") _=k and l.add_context(\"luacheck\",\"0.24.0-2\")" "%file_path_1%\rocks\luacheck\0.24.0-2\bin\luacheck" %%*
 set luacheck_path=Lua\luacheck.bat
 echo %head%>%luacheck_path%
 echo %config%>>%luacheck_path%
