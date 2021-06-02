@@ -15,15 +15,16 @@
 ### 2. 下载luacheck package到本地，双击打开工程中的auto_generate_config.bat文件，自动生成配置
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_2.png"></br>
 
-### 3. 复制上一步cmd窗口中luacheck.bat的生成路径，将其加到Path环境变量中
+### 3. 随后复制cmd窗口中luacheck.bat的生成路径，将其加到Path环境变量中
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_3.png"></br>
+<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_4.png"></br>
 
 ### 3. 在VS Code中打开lua文件，按 ctrl+shift+M 打开Problems栏，即可看到luacheck警告日志
-<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_4.png" width="500"/></br>
+<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_5.png" width="500"/></br>
 
 ### 4. 找到vscode-lua插件的安装位置，使用工程中的extension.js文件覆盖原插件中的同名文件（可解决编辑器代码提示变慢的问题）
-<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_5.png" width="1000"/></br>
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_6.png" width="1000"/></br>
+<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_7.png" width="1000"/></br>
 
 ## 额外检查规则
 ### 1. 不标准的函数命名(811)
