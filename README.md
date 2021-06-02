@@ -15,7 +15,7 @@
 ### 2. 下载luacheck package到本地，双击打开工程中的auto_generate_config.bat文件，自动生成配置
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_2.png"></br>
 
-### 3. 复制cmd窗口中的luacheck.bat路径，将其添加到Path环境变量中
+### 3. 复制cmd窗口中的luacheck.bat路径，将其添加到PATH环境变量中
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_3.png"></br>
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_4.png"></br>
 
