@@ -1,0 +1,2 @@
+@echo off
+"F:\Github Workspace\luacheck-package\Lua\lua53.exe" -e "package.path=\"F:\\Github Workspace\\luacheck-package\\Lua/luarocks/share/lua/5.3/?.lua;F:\\Github Workspace\\luacheck-package\\Lua/luarocks/share/lua/5.3/?/init.lua;\"..package.path;package.cpath=\"F:\\Github Workspace\\luacheck-package\\Lua/luarocks/lib/lua/5.3/?.dll;\"..package.cpath;local k,l,_=pcall(require,'luarocks.loader') _=k and l.add_context('luacheck','0.24.0-2')" "F:\Github Workspace\luacheck-package\Lua\luarocks\lib\luarocks\rocks-5.3\luacheck\0.24.0-2\bin\luacheck" %*

@@ -1,0 +1,14 @@
+rock_manifest = {
+   doc = {
+      README = "3e074539524c34dd1ec424a6f0347e55"
+   },
+   ["lanes-3.13.0-0.rockspec"] = "0a5d7a7f19a26646833a19ca8a611e8a",
+   lib = {
+      lanes = {
+         ["core.dll"] = "a69e113727ecd56f96bcf8cb7f0c0ade"
+      }
+   },
+   lua = {
+      ["lanes.lua"] = "18003201c04197d921d11d5dc203a2db"
+   }
+}

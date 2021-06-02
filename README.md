@@ -12,7 +12,7 @@
 ### 1. 在VS Code中搜索vscode-luacheck插件并安装
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_1.png" width="450"/></br>
 
-### 2. 下载luacheck package到本地，随后以管理员身份打开工程中的auto_generate_config.bat文件，等待运行完成
+### 2. 下载luacheck package到本地，双击打开工程中的auto_generate_config.bat文件
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_2.png"></br>
 
 ### 3. 在VS Code中打开lua文件，按 ctrl+shift+M 打开Problems栏，即可看到luacheck警告日志
