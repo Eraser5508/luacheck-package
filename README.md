@@ -149,14 +149,14 @@
  631|Line is too long.
  811|Nonstandard function name.
  812|Connect string with '..'.
- 813|Use constant indirectly
- 814|Multiple same 'GetTable' instruction in same function
- 815|Create C++ objects in 'Tick' function
- 911|Use 'arg' as parameter name
- 912|Use semicolon to seperate statements
- 913|Specify the array subscript from '0' explicitly
- 914|Mix array and hash when constructing a table
- 915|Missing spaces on both sides of binary operator
+ 813|Use constant indirectly.
+ 814|Multiple same 'GetTable' instruction in same function.
+ 815|Create C++ objects in 'Tick' function.
+ 911|Use 'arg' as parameter name.
+ 912|Use semicolon to seperate statements.
+ 913|Specify the array subscript from '0' explicitly.
+ 914|Mix array and hash when constructing a table.
+ 915|Missing spaces on both sides of binary operator.
 
 - 011-631为luacheck原有规则，811-915为额外规则
 
