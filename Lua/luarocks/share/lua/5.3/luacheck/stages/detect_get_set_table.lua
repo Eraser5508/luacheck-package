@@ -107,7 +107,7 @@ local function warn_set_table(chstate)
    end
 end
 
-local function warn_same_get_table_operation(chstate, function_info)
+local function warn_same_get_table_instruction(chstate, function_info)
    for _, value_variable in ipairs(function_info.variables_info) do
       if get_table_length(value_variable.nodes) > 1 and value_variable.depth > 1 then
          if not find_variable_in_set(function_info.function_name, value_variable.name) then
@@ -136,12 +136,9 @@ local function warn_object_creation_in_tick(chstate, function_info)
 end
 
 local function warn_get_table(chstate)
-   local num = get_table_length(functions_in_tick)
    for _, value_function in ipairs(variables_get) do
-      warn_same_get_table_operation(chstate, value_function)
-      if num > 0 then
-         warn_object_creation_in_tick(chstate, value_function)
-      end
+      warn_same_get_table_instruction(chstate, value_function)
+      warn_object_creation_in_tick(chstate, value_function)
    end
 end
 
@@ -191,12 +188,10 @@ local function save_variable_get(function_name, name, node, depth)
          if is_new_node == true then
             tinsert(variable_info.nodes, node)
          end
-      end
-      if not variable_info then
+      else
          tinsert(function_info.variables_info, new_variable)
       end
-   end
-   if not function_info then
+   else
       local new_function = {
          function_name = function_name,
          variables_info = {new_variable}
