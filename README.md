@@ -158,7 +158,7 @@
  914|Mix array and hash when constructing a table
  915|Missing spaces on both sides of binary operator
 
-- 011-631为luacheck原有规则，811-915为新增规则
+- 011-631为luacheck原有规则，811-915为额外规则
 
 ## 相关文档
 - luacheck参数配置指南：https://luacheck.readthedocs.io/en/stable/
