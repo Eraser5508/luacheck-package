@@ -24,7 +24,7 @@
 
 ### 5. （可选）找到vscode-lua插件的安装位置，将Files文件夹中的extension.js、diagnostic.js文件覆盖原插件中的同名文件
 - extension.js可解决编辑器代码提示缓慢的问题
-- diagnostic.js可在编辑器Problems栏中显示luacheck警告代码
+- diagnostic.js可在编辑器Problems栏中显示luacheck警告码
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_6.png" width="1000"/></br>
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_7.png" width="1000"/></br>
 
