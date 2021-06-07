@@ -19,10 +19,12 @@
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_3.png"></br>
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_4.png"></br>
 
-### 3. 在VS Code中打开lua文件，按 ctrl+shift+M 打开Problems栏，即可看到luacheck警告日志
+### 4. 在VS Code中打开lua文件，按 ctrl+shift+M 打开Problems栏，即可看到luacheck警告日志
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_5.png" width="500"/></br>
 
-### 4. 找到vscode-lua插件的安装位置，使用工程中的extension.js文件覆盖原插件中的同名文件（可解决编辑器代码提示变慢的问题）
+### 5. （可选）找到vscode-lua插件的安装位置，将Files文件夹中的extension.js、diagnostic.js文件覆盖原插件中的同名文件
+- extension.js可解决编辑器代码提示缓慢的问题
+- diagnostic.js可在编辑器Problems栏中显示luacheck警告代码
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_6.png" width="1000"/></br>
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_7.png" width="1000"/></br>
 
