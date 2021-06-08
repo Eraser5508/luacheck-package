@@ -257,6 +257,7 @@ local function search_variable_get(node, function_name)
       end
    elseif tag == "Set" then
       search_variable_set(lhs[1], rhs[1].tag == "Number", function_name)
+      search_variable_get(rhs[1], function_name)
    elseif type(node) == "table" then
       for _, next_node in ipairs(node) do
          search_variable_get(next_node, function_name)
