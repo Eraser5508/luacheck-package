@@ -138,7 +138,7 @@ end
 local function warn_get_table(chstate)
    for _, value_function in ipairs(variables_get) do
       warn_same_get_table_instruction(chstate, value_function)
-      warn_object_creation_in_tick(chstate, value_function)
+      -- warn_object_creation_in_tick(chstate, value_function)
    end
 end
 

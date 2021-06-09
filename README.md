@@ -55,12 +55,6 @@
 
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_814.png" width="800"/></br>
 
-### 5. 在Tick中新建C++对象(815)
-- 在Tick函数及其调用的函数中
-- 调用外部函数新建C++对象
-
-<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_815.png" width="800"/></br>
-
 ### 6. 使用arg作为参数名(911)
 
 - function中的参数名为"arg"
@@ -151,7 +145,6 @@
  812|Connect string with '..'.
  813|Use constant indirectly.
  814|Multiple same 'GetTable' instruction in same function.
- 815|Create C++ objects in 'Tick' function.
  911|Use 'arg' as parameter name.
  912|Use semicolon to seperate statements.
  913|Specify the array subscript from '0' explicitly.
