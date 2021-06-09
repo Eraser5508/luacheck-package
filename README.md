@@ -30,56 +30,51 @@
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/guide_image_7.png" width="1000"/></br>
 
 ## 额外检查规则
-### 1. 不标准的函数命名(811)
-- 非大写字母开头的函数名
-- 函数名为单个字符
 
-<br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_811.png" width="800"/></br>
-
-### 2. 不推荐的字符连接方式(812)
+### 1. 不推荐的字符连接方式(812)
 - 使用'..'连接字符串
 
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_812.png" width="800"/></br>
 
-### 3. 没有直接使用常量(813)
+### 2. 没有直接使用常量(813)
 - 将一个number数据放入table.XXX中
 - 没有对table.xxx进行二次赋值
 - 对table.xxx进行了引用
 
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_813.png" width="800"/></br>
 
-### 4. 使用过多相同的GetTable操作(814)
+### 3. 使用过多相同的GetTable操作(814)
 - 在同一个function中
 - 没有对table.xxx.xxx进行赋值
 - 调用同一个table.xxx.xxx 2次及以上
 
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_814.png" width="800"/></br>
 
-### 6. 使用arg作为参数名(911)
+### 4. 使用arg作为参数名(911)
 
 - function中的参数名为"arg"
 
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_911.png" width="800"/></br>
 
-### 7. 使用分号分隔语句(912)
+### 5. 使用分号分隔语句(912)
 
 - 使用";"分隔语句
 
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_912.png" width="800"/></br>
 
-### 8. 显式指定数组下标从0开始(913)
+### 6. 显式指定数组下标从0开始(913)
 
 - 对table[0]进行赋值
 
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_913.png" width="800"/></br>
 
-### 9. 创建table时混用array与hash(914)
+### 7. 创建table时混用array与hash(914)
 
 - 既显式指定数组下标，又使用默认数组索引
 
 <br/><img src="https://github.com/Eraser5508/luacheck-package/blob/master/Image/sample_image_914.png" width="800"/></br>
 
-### 10. 二元运算符两边未加空格(915)
+### 8. 二元运算符两边未加空格(915)
 
 - 使用"+" "-" "<"等二元运算符时两边未加空格（乘幂运算符"^"除外）
 
@@ -141,7 +136,6 @@
  614|Trailing whitespace in a comment.
  621|Inconsistent indentation (SPACE followed by TAB).
  631|Line is too long.
- 811|Nonstandard function name.
  812|Connect string with '..'.
  813|Use constant indirectly.
  814|Multiple same 'GetTable' instruction in same function.

@@ -76,7 +76,7 @@ end
 local function detect_function_definition(chstate,line)
    local node = line.node
    if node.tag == "Function" then
-      warn_function_name(chstate, node)
+      -- warn_function_name(chstate, node)
       warn_function_para(chstate, node)
    end
 end
