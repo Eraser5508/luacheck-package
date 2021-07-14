@@ -65,7 +65,9 @@ function CyclomaticComplexityMetric:calc_exprs(exprs)
 end
 
 function CyclomaticComplexityMetric:calc_item_Eval(item)
-   self:calc_expr(item.node)
+   if item.node then
+      self:calc_expr(item.node)
+   end
 end
 
 function CyclomaticComplexityMetric:calc_item_Local(item)
@@ -75,7 +77,9 @@ function CyclomaticComplexityMetric:calc_item_Local(item)
 end
 
 function CyclomaticComplexityMetric:calc_item_Set(item)
-   self:calc_exprs(item.rhs)
+   if item.rhs then
+      self:calc_exprs(item.rhs)
+   end
 end
 
 function CyclomaticComplexityMetric:calc_item(item)
@@ -95,7 +99,7 @@ end
 function CyclomaticComplexityMetric:calc_stmt_If(node)
    for i = 1, #node - 1, 2 do
       self:incr_decisions(1)
-      self:calc_stmts(node[i+1])
+      self:calc_stmts(node[i + 1])
    end
 
    if #node % 2 == 1 then
