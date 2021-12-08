@@ -1,3 +1,5 @@
+local utils = require "luacheck.utils"
+
 local stage = {}
 
 local pairs = pairs
@@ -20,11 +22,9 @@ stage.warnings = {
       fields = {"variable_name"}}
 }
 
-local variables_set = {}
-local variables_get = {}
-local functions_in_tick = {"Tick"}
+local TableDetector = utils.class()
 
-local function get_table_length(table)
+function TableDetector:get_table_length(table)
    local length = 0
    for _, _ in pairs(table) do
       length = length + 1
@@ -32,7 +32,7 @@ local function get_table_length(table)
    return length
 end
 
-local function get_function_name(function_name)
+function TableDetector:get_function_name(function_name)
    if function_name then
       local temp_name = function_name
       local _, index = sfind(temp_name, "%.", 1)
@@ -45,8 +45,8 @@ local function get_function_name(function_name)
    return nil
 end
 
-local function find_function_in_get(function_name)
-   for _, value in ipairs(variables_get) do
+function TableDetector:find_function_in_get(function_name)
+   for _, value in ipairs(self.variables_get) do
       if value.function_name == function_name then
          return value
       end
@@ -54,7 +54,7 @@ local function find_function_in_get(function_name)
    return nil
 end
 
-local function find_variable_in_get(variables_info, varibale_name)
+function TableDetector:find_variable_in_get(variables_info, varibale_name)
    for _, value in ipairs(variables_info) do
       if value.name == varibale_name then
          return value
@@ -63,8 +63,8 @@ local function find_variable_in_get(variables_info, varibale_name)
    return nil
 end
 
-local function find_variable_in_set(function_name, variable_name)
-   for _, value in ipairs(variables_set) do
+function TableDetector:find_variable_in_set(function_name, variable_name)
+   for _, value in ipairs(self.variables_set) do
       if value.name == variable_name and value.function_name == function_name then
          return value
       end
@@ -72,21 +72,21 @@ local function find_variable_in_set(function_name, variable_name)
    return nil
 end
 
-local function find_function_in_tick(function_name)
-   for _, value in ipairs(functions_in_tick) do
-      if value == get_function_name(function_name) then
+function TableDetector:find_function_in_tick(function_name)
+   for _, value in ipairs(self.functions_in_tick) do
+      if value == self:get_function_name(function_name) then
          return value
       end
    end
    return nil
 end
 
-local function warn_set_table(chstate)
-   for _, value_set in ipairs(variables_set) do
+function TableDetector:warn_set_table(chstate)
+   for _, value_set in ipairs(self.variables_set) do
       if value_set.is_const == true and value_set.function_name == "unknown" then
          local is_get = false
-         for _, value_function in ipairs (variables_get) do
-            local variable_info = find_variable_in_get(value_function.variables_info, value_set.name)
+         for _, value_function in ipairs (self.variables_get) do
+            local variable_info = self:find_variable_in_get(value_function.variables_info, value_set.name)
             if variable_info then
                for _, value_node in ipairs(variable_info.nodes) do
                   if value_node.offset ~= value_set.node.offset then
@@ -107,10 +107,10 @@ local function warn_set_table(chstate)
    end
 end
 
-local function warn_same_get_table_instruction(chstate, function_info)
+function TableDetector:warn_same_get_table_instruction(chstate, function_info)
    for _, value_variable in ipairs(function_info.variables_info) do
-      if get_table_length(value_variable.nodes) > 1 and value_variable.depth > 1 then
-         if not find_variable_in_set(function_info.function_name, value_variable.name) then
+      if self:get_table_length(value_variable.nodes) > 1 and value_variable.depth > 1 then
+         if not self:find_variable_in_set(function_info.function_name, value_variable.name) then
             for _, node in ipairs(value_variable.nodes) do
                chstate:warn_range("814", node, {
                   variable_name = value_variable.name
@@ -121,8 +121,8 @@ local function warn_same_get_table_instruction(chstate, function_info)
    end
 end
 
-local function warn_object_creation_in_tick(chstate, function_info)
-   if find_function_in_tick(function_info.function_name) then
+function TableDetector:warn_object_creation_in_tick(chstate, function_info)
+   if self:find_function_in_tick(function_info.function_name) then
       for _, value in ipairs(function_info.variables_info) do
          if ssub(value.name, 1, 5) == "UE4.F" then
             for _, node in ipairs(value.nodes) do
@@ -135,17 +135,17 @@ local function warn_object_creation_in_tick(chstate, function_info)
    end
 end
 
-local function warn_get_table(chstate)
-   for _, value_function in ipairs(variables_get) do
-      warn_same_get_table_instruction(chstate, value_function)
-      -- warn_object_creation_in_tick(chstate, value_function)
+function TableDetector:warn_get_table(chstate)
+   for _, value_function in ipairs(self.variables_get) do
+      self:warn_same_get_table_instruction(chstate, value_function)
+      -- self:warn_object_creation_in_tick(chstate, value_function)
    end
 end
 
-local function save_variable_set(function_name, name, node, is_number, depth)
+function TableDetector:save_variable_set(function_name, name, node, is_number, depth)
    local is_new = true
    local is_const = is_number
-   for _, value in ipairs(variables_set) do
+   for _, value in ipairs(self.variables_set) do
       if value.name == name then
          is_const = false
          value.is_const = false
@@ -163,20 +163,20 @@ local function save_variable_set(function_name, name, node, is_number, depth)
          node = node,
          depth = depth
       }
-      tinsert(variables_set, new_variable)
+      tinsert(self.variables_set, new_variable)
    end
 end
 
-local function save_variable_get(function_name, name, node, depth)
+function TableDetector:save_variable_get(function_name, name, node, depth)
    local new_variable = {
       name = name,
       depth = depth,
       nodes = {node}
    }
 
-   local function_info = find_function_in_get(function_name)
+   local function_info = self:find_function_in_get(function_name)
    if function_info then
-      local variable_info = find_variable_in_get(function_info.variables_info, name)
+      local variable_info = self:find_variable_in_get(function_info.variables_info, name)
       if variable_info then
          local is_new_node = true
          for _, value in ipairs(variable_info.nodes) do
@@ -196,24 +196,24 @@ local function save_variable_get(function_name, name, node, depth)
          function_name = function_name,
          variables_info = {new_variable}
       }
-      tinsert(variables_get, new_function)
+      tinsert(self.variables_get, new_function)
    end
 end
 
-local function save_function_in_tick(function_name)
+function TableDetector:save_function_in_tick(function_name)
    local is_new_function = true
-   for _, value in ipairs(functions_in_tick) do
+   for _, value in ipairs(self.functions_in_tick) do
       if value == function_name then
          is_new_function = false
          break
       end
    end
    if is_new_function == true then
-      tinsert(functions_in_tick, function_name)
+      tinsert(self.functions_in_tick, function_name)
    end
 end
 
-local function combline_variable_name(node, depth)
+function TableDetector:combline_variable_name(node, depth)
    local node_1 = node[1]
    local node_2 = node[2]
    if node_1 and node_2 then
@@ -223,7 +223,7 @@ local function combline_variable_name(node, depth)
                return tconcat({node_1[1], ".", node_2[1]}), depth + 1
             end
          end
-         local name, new_depth = combline_variable_name(node_1, depth)
+         local name, new_depth = self:combline_variable_name(node_1, depth)
          if name then
             if slen(node_2[1]) > 1 then
                return tconcat({name, ".", node_2[1]}), new_depth + 1
@@ -234,38 +234,38 @@ local function combline_variable_name(node, depth)
    return nil, 0
 end
 
-local function search_variable_set(node, is_number, function_name)
-   local name, depth = combline_variable_name(node, 0)
+function TableDetector:search_variable_set(node, is_number, function_name)
+   local name, depth = self:combline_variable_name(node, 0)
    if name then
-      save_variable_set(function_name, name, node, is_number, depth)
+      self:save_variable_set(function_name, name, node, is_number, depth)
    end
 end
 
-local function search_variable_get(node, function_name)
+function TableDetector:search_variable_get(node, function_name)
    local tag = node.tag
    local lhs = node[1]
    local rhs = node[2]
    if tag == "Invoke" then
-      if get_function_name(function_name) == "Tick" and lhs[1] == "self" and lhs.tag == "Id" then
-         save_function_in_tick(rhs[1])
+      if self:get_function_name(function_name) == "Tick" and lhs[1] == "self" and lhs.tag == "Id" then
+         self:save_function_in_tick(rhs[1])
       end
    end
    if tag == "Index" then
-      local name, depth = combline_variable_name(node, 0)
+      local name, depth = self:combline_variable_name(node, 0)
       if name then
-         save_variable_get(function_name, name, node, depth)
+         self:save_variable_get(function_name, name, node, depth)
       end
    elseif tag == "Set" then
-      search_variable_set(lhs[1], rhs[1].tag == "Number", function_name)
-      search_variable_get(rhs[1], function_name)
+      self:search_variable_set(lhs[1], rhs[1].tag == "Number", function_name)
+      self:search_variable_get(rhs[1], function_name)
    elseif type(node) == "table" then
       for _, next_node in ipairs(node) do
-         search_variable_get(next_node, function_name)
+         self:search_variable_get(next_node, function_name)
       end
    end
 end
 
-local function detect_get_set_table(line)
+function TableDetector:detect_get_set_table(line)
    for _, item in ipairs(line.items) do
       local function_name = "unknown"
       local rhs = item.rhs
@@ -276,23 +276,28 @@ local function detect_get_set_table(line)
          if node.tag == "Function" then
             function_name = node.name
             if rhs and rhs[1] then
-               search_variable_get(rhs[1], function_name)
+               self:search_variable_get(rhs[1], function_name)
             end
          end
       elseif item.tag == "Set" then
          if rhs and rhs[1] and lhs and lhs[1] then
-            search_variable_set(lhs[1], rhs[1].tag == "Number", function_name)
+            self:search_variable_set(lhs[1], rhs[1].tag == "Number", function_name)
          end
       end
    end
 end
 
 function stage.run(chstate)
+   local detector = TableDetector()
+   detector.variables_set = {}
+   detector.variables_get = {}
+   detector.functions_in_tick = {"Tick"}
+
    for _, line in ipairs(chstate.lines) do
-      detect_get_set_table(line)
+      detector:detect_get_set_table(line)
    end
-   warn_set_table(chstate)
-   warn_get_table(chstate)
+   detector:warn_set_table(chstate)
+   detector:warn_get_table(chstate)
 end
 
 return stage
