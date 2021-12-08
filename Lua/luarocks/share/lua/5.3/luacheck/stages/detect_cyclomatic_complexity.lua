@@ -47,9 +47,9 @@ function CyclomaticComplexityMetric:incr_decisions(count)
 end
 
 function CyclomaticComplexityMetric:calc_expr(node)
-   if node.tag == "Op" and (node[1] == "and" or node[1] == "or") then
-      self:incr_decisions(1)
-   end
+   -- if node.tag == "Op" and (node[1] == "and" or node[1] == "or") then
+   --    self:incr_decisions(1)
+   -- end
 
    if node.tag ~= "Function" then
       self:calc_exprs(node)
